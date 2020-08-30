@@ -57,11 +57,13 @@ export default function Tag({ tag, tagFilter, setTagFilter }) {
   return (
     <TagBox ref={tagRef} onClick={changeTagFilter}>
       <TagContent>{tag}</TagContent>
+      {tagFilter.includes(tag) && <DeleteTag>선택해제</DeleteTag>}
     </TagBox>
   );
 }
 
 const TagBox = styled.div`
+  display: flex;
   border-radius: 10px;
   margin: 2px;
   height: fit-content;
@@ -76,4 +78,10 @@ const TagContent = styled.p`
   color: ivory;
   width: fit-content;
   margin: 0;
+`;
+
+const DeleteTag = styled.p`
+  color: white;
+  margin-right: 10px;
+  margin-left: auto;
 `;

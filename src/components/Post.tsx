@@ -15,8 +15,8 @@ export default function List(props) {
       <UserInformation>{name}</UserInformation>
       <p>{!isShowAll && content.length >= 20 ? content.substr(0, 30) + "...더보기" : content}</p>
       <PostTagList>
-        {tagList.map((tag) => {
-          return <Tag tag={tag} tagFilter={tagFilter} setTagFilter={setTagFilter} />;
+        {tagList.map((tag, index) => {
+          return <Tag tag={tag} tagFilter={tagFilter} setTagFilter={setTagFilter} key={index} />;
         })}
       </PostTagList>
     </PostWrapper>
