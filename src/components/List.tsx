@@ -38,7 +38,7 @@ const postList: postProps[] = [
 ];
 
 export default function List() {
-  const [tagFilter, setTagFilter] = useState(null);
+  const [tagFilter, setTagFilter] = useState([]);
   // csv -> json or array로 변환한 파일을 저장할 state
   const [tagList, setTagList] = useState<string[]>([]);
 
@@ -52,16 +52,25 @@ export default function List() {
     setTagList(Array.from(newTagList));
   }, []);
 
+  // 작성글에 검색 태그가 포함되어 있는지 확인
+  const isPostShow = (post: postProps, tagFilter: string[]) => {
+    for (let tag of post.tagList) {
+      if (tagFilter.length === 0 || tagFilter.includes(tag)) {
+        return true;
+      }
+    }
+    return false;
+  };
+
   return (
     <Wrapper>
       <Title>질문 게시판</Title>
       <Content>
         <PostList>
-          {postList.map((post) => {
-            if (tagFilter && !post.tagList.includes(tagFilter[0])) {
-              return <div></div>;
-            }
-            return <Post {...post} tagFilter={tagFilter} setTagFilter={setTagFilter} />;
+          {postList.map((post, index) => {
+            if (!isPostShow(post, tagFilter)) return <div></div>;
+
+            return <Post {...post} tagFilter={tagFilter} setTagFilter={setTagFilter} key={index} />;
           })}
         </PostList>
         <TagList>
@@ -82,6 +91,7 @@ const Wrapper = styled.div`
   padding-left: 30%;
   padding-right: 30%;
 `;
+
 const Title = styled.div`
   text-align: center;
   font-size: 50px;
