@@ -65,6 +65,7 @@ export default function List() {
   return (
     <Wrapper>
       <Title>질문 게시판</Title>
+      <PostButton href="/posting">글쓰기</PostButton>
       <Content>
         <PostList>
           {postList.map((post, index) => {
@@ -101,6 +102,13 @@ const Title = styled.div`
   font-size: 50px;
   margin: 30px;
   padding-right: 90px;
+`;
+
+const PostButton = styled.a`
+  border: none;
+  border-radius: 20px;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
 `;
 
 const Content = styled.div`
