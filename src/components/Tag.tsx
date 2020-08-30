@@ -44,11 +44,18 @@ export default function Tag({ tag, tagFilter, setTagFilter }) {
   }, [tag]);
 
   // 필터를 추가
-  const addTagFilter = () => {
-    setTagFilter([tag]);
+  const changeTagFilter = () => {
+    if (tagFilter.includes(tag)) {
+      const newTagFilter: string[] = [...tagFilter];
+      const tagIndex: number = newTagFilter.indexOf(tag);
+      if (tagIndex > -1) newTagFilter.splice(tagIndex, 1);
+      setTagFilter([...newTagFilter]);
+      return;
+    }
+    setTagFilter([...tagFilter, tag]);
   };
   return (
-    <TagBox ref={tagRef} onClick={addTagFilter}>
+    <TagBox ref={tagRef} onClick={changeTagFilter}>
       <TagContent>{tag}</TagContent>
     </TagBox>
   );

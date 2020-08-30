@@ -74,7 +74,11 @@ export default function List() {
           })}
         </PostList>
         <TagList>
-          <SelectedTagListWrapper>안녕</SelectedTagListWrapper>
+          <SelectedTagListWrapper>
+            {tagFilter.map((tag) => {
+              return <Tag tag={tag} tagFilter={tagFilter} setTagFilter={setTagFilter} />;
+            })}
+          </SelectedTagListWrapper>
           <NotSelectedTagListWrapper>
             {tagList.map((tag) => {
               return <Tag tag={tag} tagFilter={tagFilter} setTagFilter={setTagFilter} />;
