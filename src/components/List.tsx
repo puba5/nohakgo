@@ -3,7 +3,13 @@ import styled from "styled-components";
 import Post from "./Post";
 import Tag from "./Tag";
 
-const postList = [
+type postProps = {
+  name: string;
+  content: string;
+  tagList: string[];
+};
+
+const postList: postProps[] = [
   {
     name: "익명1",
     content: "인공지능 너무 어려워요 ㅠ",
@@ -34,7 +40,7 @@ const postList = [
 export default function List() {
   const [tagFilter, setTagFilter] = useState(null);
   // csv -> json or array로 변환한 파일을 저장할 state
-  const [tagList, setTagList] = useState([]);
+  const [tagList, setTagList] = useState<string[]>([]);
 
   useEffect(() => {
     let newTagList = new Set([]);
@@ -43,24 +49,28 @@ export default function List() {
         newTagList.add(tag);
       });
     });
-    setTagList([...newTagList]);
+    setTagList(Array.from(newTagList));
   }, []);
+
   return (
     <Wrapper>
       <Title>질문 게시판</Title>
       <Content>
         <PostList>
           {postList.map((post) => {
-            if (tagFilter && !post.tagList.includes(tagFilter)) {
+            if (tagFilter && !post.tagList.includes(tagFilter[0])) {
               return <div></div>;
             }
             return <Post {...post} tagFilter={tagFilter} setTagFilter={setTagFilter} />;
           })}
         </PostList>
         <TagList>
-          {tagList.map((tag) => {
-            return <Tag tag={tag} tagFilter={tagFilter} setTagFilter={setTagFilter} />;
-          })}
+          <SelectedTagListWrapper>안녕</SelectedTagListWrapper>
+          <NotSelectedTagListWrapper>
+            {tagList.map((tag) => {
+              return <Tag tag={tag} tagFilter={tagFilter} setTagFilter={setTagFilter} />;
+            })}
+          </NotSelectedTagListWrapper>
         </TagList>
       </Content>
     </Wrapper>
@@ -90,8 +100,16 @@ const PostList = styled.div`
 `;
 
 const TagList = styled.div`
-  padding: 15px;
   border: 2px black solid;
   width: 30%;
   margin-left: 10px;
+`;
+
+const SelectedTagListWrapper = styled.div`
+  padding: 15px;
+  border-bottom: 2px black solid;
+`;
+
+const NotSelectedTagListWrapper = styled.div`
+  padding: 15px;
 `;

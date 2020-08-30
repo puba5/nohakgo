@@ -45,7 +45,7 @@ export default function Tag({ tag, tagFilter, setTagFilter }) {
 
   // 필터를 추가
   const addTagFilter = () => {
-    setTagFilter(tag);
+    setTagFilter([tag]);
   };
   return (
     <TagBox ref={tagRef} onClick={addTagFilter}>
